@@ -7,12 +7,12 @@
             return "1000";
         }
 
-        public int GetOrder()
+        public int GetMenuOrder()
         {
             return 1;
         }
 
-        public string GetTitle()
+        public string GetMenuTitle()
         {
             return "test 2";
         }

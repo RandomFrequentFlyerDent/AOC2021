@@ -3,7 +3,7 @@
     internal interface IAnswer
     {
         string Get();
-        string GetTitle();
-        int GetOrder();
+        string GetMenuTitle();
+        int GetMenuOrder();
     }
 }

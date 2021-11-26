@@ -70,8 +70,8 @@
             var menuItems = new List<MenuItem>();
             answerTypes.ForEach(t =>
             {
-                if (Activator.CreateInstance(t) is IAnswer instance)
-                    menuItems.Add(new MenuItem(instance.GetOrder(), instance.GetTitle(), () => SubMenu.Show(instance.Get())));
+                if (Activator.CreateInstance(t) is IAnswer answer)
+                    menuItems.Add(new MenuItem(answer.GetMenuOrder(), answer.GetMenuTitle(), () => SubMenu.Show(answer.Get())));
             });
             menuItems.Add(new MenuItem(-1, "Exit", () => Environment.Exit(0)));
             return menuItems.OrderByDescending(m => m.Order).ToList();
