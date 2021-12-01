@@ -26,5 +26,11 @@ namespace Tests
         {
             Assert.AreEqual("7", MeasurementLogic.NumberOfDepthIncreases(_input));
         }
+
+        [Test]
+        public void CountNumberOfDepthIncreasesThreeMeasurementWindow()
+        {
+            Assert.AreEqual("5", MeasurementLogic.NumberOfDepthIncreasesByThreeMeasurementsWindow(_input));
+        }
     }
 }
