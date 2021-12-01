@@ -1,4 +1,4 @@
-using Answers;
+using Answers.Logic;
 using NUnit.Framework;
 using System.Collections.Generic;
 

@@ -1,12 +1,12 @@
-﻿namespace Answers
+﻿namespace Answers.Menu
 {
-    internal class SubMenu
+    internal class MainMenu
     {
-        internal static void Show(string answer)
+        internal static void Show()
         {
             var menuItems = GetMenuItems();
             int index = 0;
-            WriteMenu(menuItems, menuItems[index], answer);
+            WriteMenu(menuItems, menuItems[index]);
 
             ConsoleKeyInfo keyinfo;
             do
@@ -18,7 +18,7 @@
                     if (index + 1 < menuItems.Count)
                     {
                         index++;
-                        WriteMenu(menuItems, menuItems[index], answer);
+                        WriteMenu(menuItems, menuItems[index]);
                     }
                 }
                 if (keyinfo.Key == ConsoleKey.UpArrow)
@@ -26,7 +26,7 @@
                     if (index - 1 >= 0)
                     {
                         index--;
-                        WriteMenu(menuItems, menuItems[index], answer);
+                        WriteMenu(menuItems, menuItems[index]);
                     }
                 }
                 if (keyinfo.Key == ConsoleKey.Enter)
@@ -40,20 +40,9 @@
             Console.ReadKey();
         }
 
-        private static List<MenuItem> GetMenuItems()
-        {
-            return new List<MenuItem>
-            {
-                new MenuItem(0, "Main menu", () => MainMenu.Show()),
-                new MenuItem(0, "Exit", () => Environment.Exit(0))
-            };
-        }
-
-        private static void WriteMenu(List<MenuItem> menuItems, MenuItem selected, string answer)
+        private static void WriteMenu(List<MenuItem> menuItems, MenuItem selected)
         {
             Console.Clear();
-
-            Console.WriteLine($"Answer: {answer}\n");
 
             foreach (MenuItem menuItem in menuItems)
             {
@@ -68,6 +57,24 @@
 
                 Console.WriteLine(menuItem.Title);
             }
+        }
+
+        private static List<MenuItem> GetMenuItems()
+        {
+            var answerTypes = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(x => x.GetTypes())
+            .Where(t => t.GetInterfaces()
+            .Contains(typeof(IAnswer)))
+            .ToList();
+
+            var menuItems = new List<MenuItem>();
+            answerTypes.ForEach(t =>
+            {
+                if (Activator.CreateInstance(t) is IAnswer answer)
+                    menuItems.Add(new MenuItem(answer.GetMenuOrder(), answer.GetMenuTitle(), () => SubMenu.Show(answer.Get())));
+            });
+            menuItems.Add(new MenuItem(-1, "Exit", () => Environment.Exit(0)));
+            return menuItems.OrderByDescending(m => m.Order).ToList();
         }
     }
 }

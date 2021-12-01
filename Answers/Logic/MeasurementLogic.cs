@@ -1,4 +1,4 @@
-﻿namespace Answers
+﻿namespace Answers.Logic
 {
     public class MeasurementLogic
     {

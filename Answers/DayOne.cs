@@ -1,4 +1,7 @@
-﻿namespace Answers
+﻿using Answers.Logic;
+using Answers.Utilities;
+
+namespace Answers
 {
     internal class DayOnePartOne : IAnswer
     {

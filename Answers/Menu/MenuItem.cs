@@ -1,4 +1,4 @@
-﻿namespace Answers
+﻿namespace Answers.Menu
 {
     internal class MenuItem
     {

@@ -1,4 +1,4 @@
-﻿namespace Answers
+﻿namespace Answers.Utilities
 {
     public class InputReader
     {
@@ -6,7 +6,7 @@
         {
             List<string> values = new();
             string line;
-            string fileLocation = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\input", fileName));
+            string fileLocation = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Input", fileName));
 
             StreamReader file = new(fileLocation);
             while ((line = file.ReadLine()) != null)
