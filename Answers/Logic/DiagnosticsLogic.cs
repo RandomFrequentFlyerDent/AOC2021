@@ -30,16 +30,14 @@ namespace Answers.Logic
                 .Select(group => new { Bit = group.Key, Count = group.Count() });
 
             if (grouped.Select(g => g.Count).Distinct().Count() == 1)
-            {
-                if (isCommon)
-                    return '1';
-                return '0';
-            }
+                grouped = grouped.OrderBy(g => g.Bit);
+            else
+                grouped = grouped.OrderBy(g => g.Count);
 
             if (isCommon)
-                return grouped.OrderByDescending(x => x.Count).First().Bit;
+                return grouped.Last().Bit;
             
-            return grouped.OrderBy(x => x.Count).First().Bit;
+            return grouped.First().Bit;
         }
 
         private static string GetDiagnostic(string x, string y)
