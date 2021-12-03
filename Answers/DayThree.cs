@@ -8,7 +8,7 @@ namespace Answers
         public string Get()
         {
             var input = InputReader.ReadFile("day3part1.txt");
-            return PowerConsumptionLogic.GetPowerConsumption(input);
+            return DiagnosticsLogic.GetPowerConsumption(input);
         }
 
         public int GetMenuOrder()
@@ -27,7 +27,7 @@ namespace Answers
         public string Get()
         {
             var input = InputReader.ReadFile("day3part1.txt");
-            return LifeSupportLogic.GetRating(input);
+            return DiagnosticsLogic.GetLifeSupportRating(input);
         }
 
         public int GetMenuOrder()

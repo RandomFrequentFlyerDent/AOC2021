@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Tests
 {
-    public class LifeSupportLogicTests
+    public class DiagnosticLogicTests
     {
         private readonly List<string> _input = new()
         {
@@ -23,9 +23,15 @@ namespace Tests
         };
 
         [Test]
-        public void GetRating()
+        public void GetPowerConsumption()
         {
-            Assert.AreEqual("230", LifeSupportLogic.GetRating(_input));
+            Assert.AreEqual("198", DiagnosticsLogic.GetPowerConsumption(_input));
+        }
+
+        [Test]
+        public void GetLifeSupportRating()
+        {
+            Assert.AreEqual("230", DiagnosticsLogic.GetLifeSupportRating(_input));
         }
     }
 }
