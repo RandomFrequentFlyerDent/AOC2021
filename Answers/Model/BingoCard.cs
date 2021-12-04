@@ -23,24 +23,11 @@
         public bool IsBingo(int number)
         {
             Slots.ForEach(slot => slot.Check(number));
-            return IsBingoOnRow() || IsBingoOnCol();
-        }
-
-        private bool IsBingoOnRow()
-        {
-            for (int row = 0; row < 5; row++)
+            for (int position = 0; position < 5; position++)
             {
-                var isBingo = Slots.Where(slot => slot.Row == row).All(slot => slot.Called);
+                var isBingo = Slots.Where(slot => slot.Col == position).All(slot => slot.Called);
                 if (isBingo) return true;
-            }
-            return false;
-        }
-
-        private bool IsBingoOnCol()
-        {
-            for (int col = 0; col < 5; col++)
-            {
-                var isBingo = Slots.Where(slot => slot.Col == col).All(slot => slot.Called);
+                isBingo = Slots.Where(slot => slot.Row == position).All(slot => slot.Called);
                 if (isBingo) return true;
             }
             return false;
