@@ -9,9 +9,12 @@
             string fileLocation = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Input", fileName));
 
             StreamReader file = new(fileLocation);
-            while ((line = file.ReadLine()) != null)
+            if (file != null)
             {
-                values.Add(line);
+                while ((line = file.ReadLine()) != null)
+                {
+                    values.Add(line);
+                }
             }
 
             return values;
