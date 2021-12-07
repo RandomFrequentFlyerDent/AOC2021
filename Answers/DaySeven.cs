@@ -8,7 +8,7 @@ namespace Answers
         public string Get()
         {
             var input = InputReader.ReadFile("day7part1.txt");
-            return CrabSubmarineLogic.GetFuelConsumption(input);
+            return CrabSubmarineLogic.GetFuelConsumption(input, false);
         }
 
         public int GetMenuOrder()
@@ -27,8 +27,7 @@ namespace Answers
         public string Get()
         {
             var input = InputReader.ReadFile("day7part1.txt");
-            //var input = new List<string>() { "16,1,2,0,4,2,7,1,2,14" };
-            return CrabSubmarineLogic.GetCumulativeFuelConsumption(input);
+            return CrabSubmarineLogic.GetFuelConsumption(input, true);
         }
 
         public int GetMenuOrder()

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Answers.Logic
+﻿namespace Answers.Logic
 {
     public class CrabSubmarineLogic
     {
-        public static string GetFuelConsumption(List<string> input)
+        public static string GetFuelConsumption(List<string> input, bool getCumulative)
         {
+
             var crabs = input[0].Split(',').Select(f => int.Parse(f)).ToList();
+
+            if (getCumulative)
+                return GetCumulativeFuelConsumption(crabs);
+
             var lowestFuelConsumption = long.MaxValue;
 
             for (int i = 0; i < crabs.Count; i++)
@@ -18,7 +17,7 @@ namespace Answers.Logic
                 var fuelConsumption = 0L;
                 for (int j = 0; j < crabs.Count; j++)
                 {
-                    fuelConsumption += Math.Abs(crabs[i]-crabs[j]);
+                    fuelConsumption += Math.Abs(crabs[i] - crabs[j]);
                 }
                 if (fuelConsumption < lowestFuelConsumption)
                     lowestFuelConsumption = fuelConsumption;
@@ -27,9 +26,8 @@ namespace Answers.Logic
             return lowestFuelConsumption.ToString();
         }
 
-        public static string GetCumulativeFuelConsumption(List<string> input)
+        private static string GetCumulativeFuelConsumption(List<int> crabs)
         {
-            var crabs = input[0].Split(',').Select(f => int.Parse(f)).ToList();
             var lowestPosition = crabs.Min();
             var highestPosition = crabs.Max();
             var lowestFuelConsumption = long.MaxValue;
