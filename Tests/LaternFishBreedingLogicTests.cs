@@ -10,6 +10,7 @@ namespace Tests
 
         [TestCase(18, "26")]
         [TestCase(80, "5934")]
+        [TestCase(256, "26984457539")]
         public void getNumberOfFish(int numberOfDays, string expected)
         {
             Assert.AreEqual(expected, LaternFishBreedingLogic.GetNumberOfFish(_input, numberOfDays));

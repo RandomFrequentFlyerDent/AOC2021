@@ -4,42 +4,37 @@
     {
         public static string GetNumberOfFish(List<string> input, int numberOfDays)
         {
-            var fish = input[0].Split(',').Select(f => new Fish(f)).ToList();
-            return GetFish(fish, 0, numberOfDays).Count.ToString();
+            var fish = input[0].Split(',').Select(f => int.Parse(f)).GroupBy(f => f).ToDictionary(f => f.Key, f => (long)f.Count());
+            return GetFishByAge(fish, numberOfDays).Sum(f => f.Value).ToString();
         }
 
-        private static List<Fish> GetFish(List<Fish> fish, int day, int numberOfDays)
+        private static Dictionary<int, long> GetFishByAge(Dictionary<int, long> fishByAge, int numberOfDays)
         {
-            List<Fish> expandedList = new();
-            expandedList.AddRange(fish);
-            fish.ForEach(f =>
+            for (int i = 0; i <= 8; i++)
             {
-                if (f.Procreates())
-                    expandedList.Add(new Fish("8"));
-            });
-            if (day == numberOfDays - 1) return expandedList;
-            return GetFish(expandedList, ++day, numberOfDays);
-        }
-
-        internal class Fish
-        {
-            private int _state;
-
-            public Fish(string state)
-            {
-                _state = int.Parse(state);
+                if (!fishByAge.ContainsKey(i))
+                    fishByAge.Add(i, 0);
             }
 
-            internal bool Procreates()
+            int day = 1;
+            while (day <= numberOfDays)
             {
-                if (_state == 0)
+                long previousCount = 0L;
+                for (int i = 8; i >= 0; i--)
                 {
-                    _state = 6;
-                    return true;
+                    long currentCount = fishByAge[i];
+                    if (i == 0)
+                    {
+                        fishByAge[8] = currentCount;
+                        fishByAge[6] += currentCount;
+                    }
+                    fishByAge[i] = previousCount;
+                    previousCount = currentCount;
                 }
-                _state--;
-                return false;
+                day++;
             }
+
+            return fishByAge;
         }
     }
 }
