@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Answers.Model;
+using System.Text.RegularExpressions;
 
 namespace Answers.Logic
 {
@@ -14,20 +15,15 @@ namespace Answers.Logic
                 GroupCollection groups = matches[0].Groups;
                 var signalPattern = new SignalPattern();
                 for (int i = 0; i < 10; i++)
-                    signalPattern.Pattern[i] = groups[i].Value;
+                    signalPattern.Pattern[i] = groups[i + 1].Value;
                 for (int i = 0; i < 4; i++)
-                    signalPattern.Output[i] = groups[10 + 1].Value;
+                    signalPattern.Output[i] = groups[i + 11].Value;
                 patterns.Add(signalPattern);
             });
 
-            return string.Empty;
-        }
-
-        internal class SignalPattern
-        {
-            public string[] Pattern { get; set; } = new string[10];
-            public string[] Output { get; set; } = new string[4];
-
+            return patterns
+                .Sum(p => p.GetEasyNumbersOutput().Count())
+                .ToString();
         }
     }
 }
