@@ -25,5 +25,11 @@ namespace Tests
         {
             Assert.AreEqual("26", SevenSegmentLogic.GetEasyDigitsOccurence(_input));
         }
+        
+        [Test]
+        public void GetOutputValues()
+        {
+            Assert.AreEqual("61229", SevenSegmentLogic.GetOutputValues(_input));
+        }
     }
 }

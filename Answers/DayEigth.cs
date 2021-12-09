@@ -27,7 +27,7 @@ namespace Answers
         public string Get()
         {
             var input = InputReader.ReadFile("day8part1.txt");
-            return SevenSegmentLogic.GetEasyDigitsOccurence(input);
+            return SevenSegmentLogic.GetOutputValues(input);
         }
 
         public int GetMenuOrder()
