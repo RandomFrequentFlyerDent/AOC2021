@@ -17,7 +17,7 @@ namespace Answers.Logic
             }
 
             long flashes = 0L;
-            int numberOfSteps = 2;
+            int numberOfSteps = 100;
 
             for (int i = 0; i < numberOfSteps; i++)
             {
@@ -29,7 +29,8 @@ namespace Answers.Logic
                 octopi.Where(o => o.HasAlreadyFlashed).ToList().ForEach(o => { o.HasAlreadyFlashed = false; o.EnergyLevel = 0; });
             }
 
-            return Draw(octopi); //flashes.ToString();
+            return flashes.ToString();
+            //return Draw(octopi);
         }
 
         private static long GetFlashes(List<Octopus> octopi, long flashes)
@@ -40,7 +41,7 @@ namespace Answers.Logic
                 var octopus = readyToFlash[position];
                 flashes++;
                 octopus.HasAlreadyFlashed = true;
-                octopi.Where(o => octopus.GetPositionsSurroundingOctopi().Contains(o.Position)).ToList()
+                octopi.Where(o => octopus.GetPositionsSurroundingOctopi().Contains(o.Position) && !o.HasAlreadyFlashed).ToList()
                     .ForEach(o => { o.EnergyLevel++; });
             }
 
