@@ -26,21 +26,8 @@ namespace Answers
     {
         public string Get()
         {
-            List<string> input = new()
-            {
-                "5483143223",
-                "2745854711",
-                "5264556173",
-                "6141336146",
-                "6357385478",
-                "4167524645",
-                "2176841721",
-                "6882881134",
-                "4846848554",
-                "5283751526"
-            };
-//            var input = InputReader.ReadFile("day11part1.txt");
-            return DumboOctopusLogic.GetFlashes(input);
+            var input = InputReader.ReadFile("day11part1.txt");
+            return DumboOctopusLogic.GetSynchronizedFlash(input);
         }
 
         public int GetMenuOrder()

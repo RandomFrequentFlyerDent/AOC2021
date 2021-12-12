@@ -25,5 +25,11 @@ namespace Tests
         {
             Assert.AreEqual("1656", DumboOctopusLogic.GetFlashes(_input));
         }
+
+        [Test]
+        public void GetSynchronizedFlash()
+        {
+            Assert.AreEqual("195", DumboOctopusLogic.GetSynchronizedFlash(_input));
+        }
     }
 }
