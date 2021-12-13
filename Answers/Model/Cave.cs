@@ -9,7 +9,7 @@
         public Cave(string identifier)
         {
             Identifier = identifier;
-            IsSmall = char.IsLower(identifier[0]);
+            IsSmall = char.IsLower(identifier[0]) && Identifier != "start" && Identifier != "end";
         }
     }
 }

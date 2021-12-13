@@ -8,7 +8,7 @@ namespace Answers
         public string Get()
         {
             var input = InputReader.ReadFile("day12part1.txt");
-            return PassagePathingLogic.GetPaths(input);
+            return PassagePathingLogic.GetPaths(input, false);
         }
 
         public int GetMenuOrder()
@@ -27,7 +27,7 @@ namespace Answers
         public string Get()
         {
             var input = InputReader.ReadFile("day12part1.txt");
-            return DumboOctopusLogic.GetSynchronizedFlash(input);
+            return PassagePathingLogic.GetPaths(input, true);
         }
 
         public int GetMenuOrder()
