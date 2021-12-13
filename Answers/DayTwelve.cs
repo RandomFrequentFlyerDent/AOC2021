@@ -7,8 +7,8 @@ namespace Answers
     {
         public string Get()
         {
-            var input = InputReader.ReadFile("day21part1.txt");
-            return DumboOctopusLogic.GetFlashes(input);
+            var input = InputReader.ReadFile("day12part1.txt");
+            return PassagePathingLogic.GetPaths(input);
         }
 
         public int GetMenuOrder()
