@@ -1,15 +1,20 @@
-﻿namespace Answers.Model
+﻿using System.Drawing;
+
+namespace Answers.Model
 {
     public class HeightPoint
     {
-        public int Position { get; set; }
+        public Point Position { get; set; }
+        public int Height { get; set; }
         public bool IsPeak { get; set; }
-        public int? BasinIdentifier { get; set; }
+        public bool Checked { get; set; }
 
-        public HeightPoint(int position, char height)
+        public HeightPoint(int x, int y, char height)
         {
-            Position = position;
-            IsPeak = height == '9';
+            Position = new Point(x,y);
+            Height = int.Parse(height.ToString());
+            if (height == '9')
+                IsPeak = true;
         }
     }
 }
