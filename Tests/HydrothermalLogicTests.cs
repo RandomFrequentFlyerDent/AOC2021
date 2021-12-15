@@ -1,10 +1,6 @@
 ﻿using Answers.Logic;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests
 {
@@ -24,8 +20,8 @@ namespace Tests
             "5,5-> 8,2"
         };
 
-        [TestCase(false,"5")]
-        [TestCase(true,"12")]
+        [TestCase(false, "5")]
+        [TestCase(true, "12")]
         public void GetOverlap(bool determinDiagonalVents, string expected)
         {
             Assert.AreEqual(expected, HydrothermalLogic.GetOverlap(_input, determinDiagonalVents));
