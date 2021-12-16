@@ -1,5 +1,4 @@
 ﻿using Answers.Model;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Answers.Logic
@@ -9,26 +8,33 @@ namespace Answers.Logic
         public static string GetPolymerFormula(List<string> input, int numberOfSteps)
         {
             var instructions = GetInstructions(input);
+            var insertionRules = new PairInsertionRules(instructions.insertionRules);
             var polymer = instructions.polymer;
-            StringBuilder appendedPolymer = new();
 
-            for (int step = 0; step < numberOfSteps; step++)
+            Dictionary<string, long> pairCount = new();
+            Dictionary<char, long> elementCount = new();
+
+            for (int position = 0; position < polymer.Length - 1; position++)
             {
-                for (int position = 0; position < polymer.Length - 1; position++)
-                {
-                    var rule = instructions.insertionRules
-                        .SingleOrDefault(r => r.Pair[0] == polymer[position] && r.Pair[1] == polymer[position + 1]);
-                    appendedPolymer.Append(polymer[position]);
-                    if (rule != null) appendedPolymer.Append(rule.Insertion);
-                }
-                appendedPolymer.Append(polymer.Last());
-                polymer = appendedPolymer.ToString();
-                appendedPolymer.Clear();
+                var pair = new string(polymer.Skip(position).Take(2).ToArray());
+                if (pairCount.ContainsKey(pair))
+                    pairCount[pair]++;
+                else
+                    pairCount.Add(pair, 1);
             }
 
-            var countByElement = polymer.GroupBy(p => p).ToDictionary(p => p.Key, p => p.Count());
+            for (int position = 0; position < polymer.Length; position++)
+            {
+                if (elementCount.ContainsKey(polymer[position]))
+                    elementCount[polymer[position]]++;
+                else
+                    elementCount.Add(polymer[position], 1);
+            }
 
-            return (countByElement.Max(e => e.Value) - countByElement.Min(e => e.Value)).ToString();
+            for (int i = 0; i < numberOfSteps; i++)
+                GetElementalCount(insertionRules, pairCount, elementCount);
+
+            return (elementCount.Max(e => e.Value) - elementCount.Min(e => e.Value)).ToString();
         }
 
         private static (string polymer, List<PairInsertionRule> insertionRules) GetInstructions(List<string> input)
@@ -45,8 +51,6 @@ namespace Answers.Logic
                     var insertionRule = new PairInsertionRule
                     {
                         Pair = groups["pair"].Value,
-                        First = groups["first"].Value[0],
-                        Second = groups["second"].Value[0],
                         Insertion = groups["insertion"].Value[0]
                     };
 
@@ -61,5 +65,41 @@ namespace Answers.Logic
             return instructions;
         }
 
+        private static void GetElementalCount(PairInsertionRules rules, Dictionary<string, long> pairCount, Dictionary<char, long> elementalCount)
+        {
+            Dictionary<string, long> temp = new();
+            foreach (var pair in pairCount)
+            {
+                var insertion = rules.Apply(pair.Key);
+
+                if (insertion != null)
+                {
+                    if (elementalCount.ContainsKey(insertion.Value))
+                        elementalCount[insertion.Value] += pair.Value;
+                    else
+                        elementalCount.Add(insertion.Value, pair.Value);
+
+                    var pairOne = pair.Key[0].ToString() + insertion.ToString();
+                    if (temp.ContainsKey(pairOne))
+                        temp[pairOne] += pair.Value;
+                    else
+                        temp.Add(pairOne, pair.Value);
+
+                    var pairTwo = insertion.ToString() + pair.Key[1].ToString();
+                    if (temp.ContainsKey(pairTwo))
+                        temp[pairTwo] += pair.Value;
+                    else
+                        temp.Add(pairTwo, pair.Value);
+                }
+                else
+                {
+                    temp.Add(pair.Key, pair.Value);
+                }
+            }
+
+            pairCount.Clear();
+            foreach (var item in temp)
+                pairCount.Add(item.Key, item.Value);
+        }
     }
 }

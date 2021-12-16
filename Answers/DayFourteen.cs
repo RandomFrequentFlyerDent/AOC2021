@@ -26,7 +26,7 @@ namespace Answers
     {
         public string Get()
         {
-            var input = InputReader.ReadFile("day13part1.txt");
+            var input = InputReader.ReadFile("day14part1.txt");
             return PolymerizationLogic.GetPolymerFormula(input, 40);
         }
 
